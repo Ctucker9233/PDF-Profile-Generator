@@ -1,14 +1,18 @@
-const fs = require("fs");
-const generate = require("./generateHTML")
-const stream = require("stream")
-const util = require("util")
-var convertapi = require('convertapi')('tTi0uXTS08ennqBS');
+const fs = require("fs"),
+    convertFactory = require('electron-html-to'), 
+    electronWorkers = require('electron-workers')
+const path = require("path");
+const generate = require("./generateHTML");
 const inquirer = require("inquirer");
 const axios = require("axios");
 const questions = ["What is your Github user name?", "Pick your favorite color?"];
 
 
-const writeToFile = util.promisify(fs.writeFile);
+function writeToFile(fileName, data) {
+    return fs.writeFileSync(path.join(process.cwd(), fileName), data);
+};
+
+
 
 
 function promptUser() {
@@ -25,7 +29,7 @@ function promptUser() {
             message: questions[1]
         }
     ])
-}
+};
 
 function init() {
     promptUser()
@@ -37,17 +41,26 @@ function init() {
                 .then(function (res) {
                     res.data.color = color
                     console.log(res)
-                    const html = generate(res.data);
+                    html = generate(res.data);
                     console.log(html)
-                    return writeToFile("profile.html", html)
+                    writeToFile("profile.html", html)
                 })
-                .then(function() {
-                    console.log("Successfully wrote to index.html");
-                  })
-                  .catch(function(err) {
-                    console.log(err);
-                  });
-        })
-}
+                .then(html => {
+                    console.log(html)
+                    const convert = convertFactory({
+                        converterPath: convertFactory.converters.PDF,
+                        pathToElectron: '\node_modules\.bin\electron.CMD',
+                        allowLocalFilesAccess: true
+                    });
+                    convert({ html: html }, (err, result) => {
+                        if (err) return console.error(err);
+                        result.stream.pipe(fs.createWriteStream(__dirname + "profile.pdf"));
+                        convert.kill(); // necessary if you use the electron-server strategy, see bellow for details
+                    });
+                });
+        });
+};
+
+
 
 init();
