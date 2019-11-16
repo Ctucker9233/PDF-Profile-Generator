@@ -1,3 +1,4 @@
+const index = require("./index")
 const colors = {
   green: {
     wrapperBackground: "#E6E1C3",
@@ -170,5 +171,17 @@ function generateHTML(data) {
             zoom: .75; 
           } 
          }
-      </style>`
-        }
+      </style>
+      <body>
+        <main>
+          <header class="photo-header">
+            <img src="${data.avatar_url}" alt="Courtney Tucker">
+            <h1>Hi!</h1>
+            <h1>My name is ${data.name}!
+          </header>
+        </main>
+      </body>
+      `
+}
+
+module.exports = generateHTML;

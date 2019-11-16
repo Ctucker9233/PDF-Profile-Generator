@@ -1,7 +1,9 @@
 const fs = require("fs");
+const generate = require("./generateHTML")
+const stream = require("stream")
 const inquirer = require("inquirer");
 const axios = require("axios");
-const questions = ["What is your Github user name?", "What is your favorite color?"];
+const questions = ["What is your Github user name?", "Pick your favorite color?"];
 
 
 function writeToFile(fileName, data) {
@@ -25,13 +27,18 @@ function init() {
         ])
         .then(function ({ username, colorchoice }) {
             const color = colorchoice;
-            const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
+            const queryUrl = `https://api.github.com/users/${username}`;
             axios
                 .get(queryUrl)
                 .then(function (res) {
-                    res.color = color
+                    res.data.color = color
                     console.log(res)
+                    generate(res.data);
                 })
         })
+        
+        
     }
 init();
+
+module.exports = index;
