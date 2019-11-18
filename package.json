@@ -7,7 +7,6 @@
     "axios": "^0.19.0",
     "convertapi": "^1.2.1",
     "converter": "^0.0.5",
-    "electron": "^7.1.1",
     "electron-html-to": "^2.6.0",
     "fs": "0.0.1-security",
     "inquirer": "^7.0.0",
@@ -16,7 +15,10 @@
     "phantom-html-to-pdf": "^0.6.0",
     "util": "^0.12.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "electron": "^7.1.1",
+    "electron-rebuild": "^1.8.6"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
