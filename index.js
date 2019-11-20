@@ -52,7 +52,7 @@ function init() {
             //     converterPath: convertFactory.converters.PDF
             // });
 
-            // conversion({ file: './profile.html' }, function (err, result) {
+            // conversion({ html: '<h1>Hello World</h1>' }, function (err, result) {
             //     if (err) {
             //         return console.error(err);
             //     }
