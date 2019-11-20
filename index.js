@@ -46,33 +46,33 @@ function init() {
 
                 })
 
-            var convertFactory = require('electron-html-to');
+            // var convertFactory = require('electron-html-to');
 
-            var conversion = convertFactory({
-                converterPath: convertFactory.converters.PDF
-            });
+            // var conversion = convertFactory({
+            //     converterPath: convertFactory.converters.PDF
+            // });
 
-            conversion({ file: './profile.html' }, function (err, result) {
-                if (err) {
-                    return console.error(err);
-                }
+            // conversion({ file: './profile.html' }, function (err, result) {
+            //     if (err) {
+            //         return console.error(err);
+            //     }
 
-                console.log(result.numberOfPages);
-                console.log(result.logs);
-                result.stream.pipe(fs.createWriteStream('/path/to/anywhere.pdf'));
-                conversion.kill(); // necessary if you use the electron-server strategy, see bellow for details
-            });
-            // convertapi.convert('pdf', { File: './profile.html' })
-            //     .then(function (result) {
-            //         // get converted file url
-            //         console.log("Converted file url: " + result.file.url);
+            //     console.log(result.numberOfPages);
+            //     console.log(result.logs);
+            //     result.stream.pipe(fs.createWriteStream(__dirname + '/profile.pdf'));
+            //     conversion.kill(); // necessary if you use the electron-server strategy, see bellow for details
+            // });
+            convertapi.convert('pdf', { File: './profile.html' })
+                .then(function (result) {
+                    // get converted file url
+                    console.log("Converted file url: " + result.file.url);
 
-            //         // save to file
-            //         return result.file.save(__dirname + "/profile.pdf");
-            //     })
-            //     .then(function (file) {
-            //         console.log("File saved: " + file);
-            //     });
+                    // save to file
+                    return result.file.save(__dirname + "/profile.pdf");
+                })
+                .then(function (file) {
+                    console.log("File saved: " + file);
+                });
 
         })
 }
