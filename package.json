@@ -7,7 +7,7 @@
     "axios": "^0.21.1",
     "convertapi": "^1.2.1",
     "converter": "^0.0.5",
-    "electron-html-to": "^2.6.0",
+    "electron-html-to": "^2.6.1",
     "fs": "0.0.1-security",
     "inquirer": "^7.0.0",
     "open": "^7.0.0",
